@@ -1,12 +1,19 @@
 import java.util.NoSuchElementException;
 
+/**
+ * The class implements linked list data structure.
+ * This class provides methods for prepending/appending nodes,
+ * and getting/removing nodes by index. This class employs generics
+ * to be able to link together nodes of any particular type.
+ * @author Roman Romankov (saturn9er)
+ */
 public class LinkedList<E> {
     Node<E> head;
     Node<E> tail;
     int size = 0;
 
     /**
-     * Links new element as head
+     * Links element {@code e} as a head.
      */
      public Node<E> prepend(E e) {
          Node<E> node = new Node<E>(e, null, head);
@@ -23,7 +30,7 @@ public class LinkedList<E> {
      }
 
     /**
-     * Links new element as tail
+     * Links element {@code e} as a tail.
      */
     public Node<E> append(E e) {
         Node<E> node = new Node<E>(e, tail, null);
@@ -39,19 +46,22 @@ public class LinkedList<E> {
         return node;
     }
 
-    public E getFirstValue() {
+    /**
+     * Returns head {@code Node<E>} of this linked list if not null.
+     */
+    public Node<E> getHead() {
         if (head == null)
             throw new NoSuchElementException();
         else
-            return head.value;
+            return head;
     }
 
     /**
-     * Returns a Node object located at specific index
+     * Returns a {@code Node<E>} object located at specific index
      */
     public Node<E> get(int index) {
         if (index >= size)
-            throw new IndexOutOfBoundsException();
+            throw new NoSuchElementException();
 
         if (index < (size >> 1)) {
             Node<E> n = head;
@@ -66,13 +76,20 @@ public class LinkedList<E> {
         }
     }
 
-    public E getLastValue() {
+    /**
+     * Returns tail {@code Node<E>} of this linked list if not null.
+     */
+    public Node<E> getTail() {
         if (tail == null)
             throw new NoSuchElementException();
         else
-            return tail.value;
+            return tail;
     }
 
+    /**
+     * Removes a node located at specific index from this list
+     * @return true if node was removes, false otherwise
+     */
     public boolean remove(int index) {
         if (isEmpty()) return false;
 
@@ -97,6 +114,9 @@ public class LinkedList<E> {
         return true;
     }
 
+    /**
+     * Assumes that this list is empty if it's head AND tail are null.
+     */
     public boolean isEmpty() {
         return this.head == null && this.tail == null;
     }
