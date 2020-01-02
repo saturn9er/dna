@@ -4,23 +4,23 @@ import java.util.Arrays;
  * The class implements an elegant merge sort algorithm,
  * which is based on divide and conquer algorithm design
  * paradigm based on multi-branched recursion. This algorithm
- * divides input array of integers in halves, calls itself
+ * divides input array of Comparable in halves, calls itself
  * for two halves and then merges the two sorted halves together.
  * This particular implementation uses top-down approach and
- * primitive int array (int[]).
+ * Comparable array (Comparable[]).
  * @author Roman Romankov (saturn9er)
  */
 public class MergeSort {
 
     /**
      * Sorts elements of two arrays in ascending order by comparing values in both arrays,
-     * then concatenates them in a single array, and then return it.
-     * @param left first (or left) array of integers (or part) to undergo sorting and merging
-     * @param right last (or right) array of integers (or part) to undergo sorting and merging
-     * @return a sorted array of integers
+     * then concatenates them in a single array, and then returns it.
+     * @param left first (or left) array of Comparable (or part) to undergo sorting and merging
+     * @param right last (or right) array of Comparable (or part) to undergo sorting and merging
+     * @return a sorted array of Comparable
      */
-    static int[] merge(int[] left, int[] right) {
-        int[] merged = new int[left.length + right.length];
+    static Comparable[] merge(Comparable[] left, Comparable[] right) {
+        Comparable[] merged = new Comparable[left.length + right.length];
 
         // indices
         int l = 0;
@@ -33,7 +33,7 @@ public class MergeSort {
             // meaning both of them still have elements to consider
             if (l < left.length && r < right.length) {
 
-                if (left[l] < right[r])
+                if (left[l].compareTo(right[r]) < 0)
                     merged[m++] = left[l++];
                 else
                     merged[m++] = right[r++];
@@ -54,18 +54,18 @@ public class MergeSort {
 
     /**
      * Recursively splits an array in halves then evokes merge() to do the sorting
-     * and merging on splitted parts, then returns an array sorted in ascending order.
-     * @param array unsorted array of integers
-     * @return sorted array of integers
+     * and merging on split parts, then returns an array sorted in ascending order.
+     * @param array unsorted array of Comparable
+     * @return sorted array of Comparable
      */
-    public static int[] sort(int[] array) {
+    public static Comparable[] sort(Comparable[] array) {
         int length = array.length;
-        int[] result = array;
+        Comparable[] result = array;
 
         if (length > 1) {
             int median = array.length >> 1;
-            int[] left = sort(Arrays.copyOfRange(array, 0, median));
-            int[] right = sort(Arrays.copyOfRange(array, median, length));
+            Comparable[] left = sort(Arrays.copyOfRange(array, 0, median));
+            Comparable[] right = sort(Arrays.copyOfRange(array, median, length));
             result = merge(left, right);
         }
         return result;
