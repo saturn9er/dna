@@ -74,33 +74,33 @@ public class LinkedListTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testGetFirstValueFromEmptyList() {
-        list.getFirstValue();
+    public void testGetHeadFromEmptyList() {
+        list.getHead();
     }
 
     @Test
-    public void testGetFirstValue() {
+    public void testGetHead() {
         list.append(1);
         LinkedList.Node<Integer> node = list.prepend(2);
 
-        assertThat(node.value, equalTo(list.getFirstValue()));
+        assertThat(node, equalTo(list.getHead()));
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testGetLastValueFromEmptyList() {
-        list.getLastValue();
+    public void testGeTailFromEmptyList() {
+        list.getTail();
     }
 
     @Test
-    public void testGetLastValue() {
+    public void testGetTail() {
         list.append(1);
         LinkedList.Node<Integer> node = list.append(2);
 
-        assertThat(node.value, equalTo(list.getLastValue()));
+        assertThat(node, equalTo(list.getTail()));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testGetElementWithIndexOutOfBounds() {
+    @Test(expected = NoSuchElementException.class)
+    public void testGetNonExistingElement() {
         list.get(0);
     }
 
