@@ -10,9 +10,33 @@ import java.util.NoSuchElementException;
  * @author Roman Romankov (saturn9er)
  */
 public class LinkedList<E> {
-    Node<E> head;
-    Node<E> tail;
-    int size = 0;
+    private Node<E> head;
+    private Node<E> tail;
+    private int size = 0;
+
+    /**
+     * Returns head {@code Node<E>} of this linked list if not null.
+     */
+    public Node<E> getHead() {
+        if (head == null)
+            throw new NoSuchElementException();
+        else
+            return head;
+    }
+
+    /**
+     * Returns tail {@code Node<E>} of this linked list if not null.
+     */
+    public Node<E> getTail() {
+        if (tail == null)
+            throw new NoSuchElementException();
+        else
+            return tail;
+    }
+
+    public int getSize() {
+        return size;
+    }
 
     /**
      * Links element {@code e} as a head.
@@ -23,7 +47,7 @@ public class LinkedList<E> {
          if (isEmpty())
              tail = node;
          else
-             head.previous = node;
+             head.setPrevious(node);
 
          head = node;
          size++;
@@ -40,22 +64,12 @@ public class LinkedList<E> {
         if (isEmpty())
             head = node;
         else
-            tail.next = node;
+            tail.setNext(node);
 
         tail = node;
         size++;
 
         return node;
-    }
-
-    /**
-     * Returns head {@code Node<E>} of this linked list if not null.
-     */
-    public Node<E> getHead() {
-        if (head == null)
-            throw new NoSuchElementException();
-        else
-            return head;
     }
 
     /**
@@ -79,16 +93,6 @@ public class LinkedList<E> {
     }
 
     /**
-     * Returns tail {@code Node<E>} of this linked list if not null.
-     */
-    public Node<E> getTail() {
-        if (tail == null)
-            throw new NoSuchElementException();
-        else
-            return tail;
-    }
-
-    /**
      * Removes a node located at specific index from this list
      * @return true if node was removes, false otherwise
      */
@@ -98,18 +102,18 @@ public class LinkedList<E> {
         Node<E> node = get(index);
 
         if (node.hasPrevious()) // non-head
-            node.previous.next = node.next;
+            node.previous.next = node.getNext();
         else // head
-            head = node.next;
+            head = node.getNext();
 
         if (node.hasNext()) // non-tail
-            node.next.previous = node.previous;
+            node.next.previous = node.getPrevious();
         else // tail
-            tail = node.previous;
+            tail = node.getPrevious();
 
-        node.value = null;
-        node.next = null;
-        node.previous = null;
+        node.setValue(null);
+        node.setNext(null);
+        node.setPrevious(null);
 
         size--;
 
@@ -124,14 +128,38 @@ public class LinkedList<E> {
     }
 
     public static class Node<E> {
-        E value;
-        Node<E> previous;
-        Node<E> next;
+        private E value;
+        private Node<E> previous;
+        private Node<E> next;
 
         public Node(E value, Node<E> previous, Node<E> next) {
+            setValue(value);
+            setPrevious(previous);
+            setNext(next);
+        }
+
+        public void setValue(E value) {
             this.value = value;
+        }
+
+        public E getValue() {
+            return value;
+        }
+
+        public void setPrevious(Node<E> previous) {
             this.previous = previous;
+        }
+
+        public Node<E> getPrevious() {
+            return previous;
+        }
+
+        public void setNext(Node<E> next) {
             this.next = next;
+        }
+
+        public Node<E> getNext() {
+            return next;
         }
 
         public boolean hasPrevious() {
