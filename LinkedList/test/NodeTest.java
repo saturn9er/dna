@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import com.saturn9er.linkedlist.LinkedList;
 import org.junit.Test;
 
 public class NodeTest {
@@ -9,9 +10,9 @@ public class NodeTest {
     public void testNewNode() {
         LinkedList.Node<String> node = new LinkedList.Node<String>("saturn9er", null, null);
 
-        assertThat(node.value, equalTo("saturn9er"));
-        assertThat(node.previous, equalTo(null));
-        assertThat(node.next, equalTo(null));
+        assertThat(node.getValue(), equalTo("saturn9er"));
+        assertThat(node.getPrevious(), equalTo(null));
+        assertThat(node.getNext(), equalTo(null));
     }
 
     @Test

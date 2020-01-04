@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import com.saturn9er.linkedlist.LinkedList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class LinkedListTest {
     @Test
     public void testIsEmptyWithNewList() {
         assertTrue(list.isEmpty());
-        assertThat(list.size, equalTo(0));
+        assertThat(list.getSize(), equalTo(0));
     }
 
     @Test
@@ -32,16 +33,16 @@ public class LinkedListTest {
         list.append(1);
 
         assertFalse(list.isEmpty());
-        assertThat(list.size, equalTo(1));
+        assertThat(list.getSize(), equalTo(1));
     }
 
     @Test
     public void testAppendToEmptyList() {
         LinkedList.Node<Integer> node = list.append(1);
 
-        assertThat(list.head, equalTo(node));
-        assertThat(list.tail, equalTo(node));
-        assertThat(list.size, equalTo(1));
+        assertThat(list.getHead(), equalTo(node));
+        assertThat(list.getTail(), equalTo(node));
+        assertThat(list.getSize(), equalTo(1));
     }
 
     @Test
@@ -50,17 +51,17 @@ public class LinkedListTest {
         list.append(2);
         LinkedList.Node<Integer> node = list.append(3);
 
-        assertThat(list.tail, equalTo(node));
-        assertThat(list.size, equalTo(3));
+        assertThat(list.getTail(), equalTo(node));
+        assertThat(list.getSize(), equalTo(3));
     }
 
     @Test
     public void testPrependToEmptyList() {
         LinkedList.Node<Integer> node = list.prepend(1);
 
-        assertThat(list.head, equalTo(node));
-        assertThat(list.tail, equalTo(node));
-        assertThat(list.size, equalTo(1));
+        assertThat(list.getHead(), equalTo(node));
+        assertThat(list.getTail(), equalTo(node));
+        assertThat(list.getSize(), equalTo(1));
     }
 
     @Test
@@ -69,38 +70,38 @@ public class LinkedListTest {
         list.append(2);
         LinkedList.Node<Integer> node = list.prepend(3);
 
-        assertThat(list.head, equalTo(node));
-        assertThat(list.size, equalTo(3));
+        assertThat(list.getHead(), equalTo(node));
+        assertThat(list.getSize(), equalTo(3));
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testGetFirstValueFromEmptyList() {
-        list.getFirstValue();
+    public void testGetHeadFromEmptyList() {
+        list.getHead();
     }
 
     @Test
-    public void testGetFirstValue() {
+    public void testGetHead() {
         list.append(1);
         LinkedList.Node<Integer> node = list.prepend(2);
 
-        assertThat(node.value, equalTo(list.getFirstValue()));
+        assertThat(node, equalTo(list.getHead()));
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void testGetLastValueFromEmptyList() {
-        list.getLastValue();
+    public void testGeTailFromEmptyList() {
+        list.getTail();
     }
 
     @Test
-    public void testGetLastValue() {
+    public void testGetTail() {
         list.append(1);
         LinkedList.Node<Integer> node = list.append(2);
 
-        assertThat(node.value, equalTo(list.getLastValue()));
+        assertThat(node, equalTo(list.getTail()));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testGetElementWithIndexOutOfBounds() {
+    @Test(expected = NoSuchElementException.class)
+    public void testGetNonExistingElement() {
         list.get(0);
     }
 
@@ -128,7 +129,7 @@ public class LinkedListTest {
         list.append(2);
         LinkedList.Node<Integer> node = list.append(3);
 
-        assertThat(list.get(list.size - 1), equalTo(node));
+        assertThat(list.get(list.getSize() - 1), equalTo(node));
     }
 
     @Test
@@ -146,19 +147,20 @@ public class LinkedListTest {
 
         assertTrue(list.remove(2));
         assertThat(list.get(2), equalTo(toBeTheThird));
-        assertThat(toBeRemoved.value, equalTo(null));
-        assertThat(toBeRemoved.next, equalTo(null));
-        assertThat(toBeRemoved.previous, equalTo(null));
+        assertThat(toBeRemoved.getValue(), equalTo(null));
+        assertThat(toBeRemoved.getNext(), equalTo(null));
+        assertThat(toBeRemoved.getPrevious(), equalTo(null));
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void testRemoveFromListWithSingleElement() {
         list.append(1);
 
         assertTrue(list.remove(0));
-        assertThat(list.head, equalTo(null));
-        assertThat(list.tail, equalTo(null));
-        assertThat(list.size, equalTo(0));
+
+        list.get(0); // NoSuchElementException expected
+
+        assertThat(list.getSize(), equalTo(0));
     }
 
     @Test
@@ -168,8 +170,8 @@ public class LinkedListTest {
         list.append(3);
 
         assertTrue(list.remove(0));
-        assertThat(list.head, equalTo(headToBe));
-        assertThat(list.size, equalTo(2));
+        assertThat(list.getHead(), equalTo(headToBe));
+        assertThat(list.getSize(), equalTo(2));
     }
 
     @Test
@@ -178,9 +180,9 @@ public class LinkedListTest {
         LinkedList.Node<Integer> tailToBe = list.append(2);
         list.append(3);
 
-        assertTrue(list.remove(list.size - 1));
-        assertThat(list.tail, equalTo(tailToBe));
-        assertThat(list.size, equalTo(2));
+        assertTrue(list.remove(list.getSize() - 1));
+        assertThat(list.getTail(), equalTo(tailToBe));
+        assertThat(list.getSize(), equalTo(2));
     }
 
 }
